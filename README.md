@@ -1,2 +1,6 @@
-# Suck-n-Sort
-This is our internship project at PT Xirka Dama Persada, which will later be implemented at Cikapundung River and waste management industry.
+# Suck n Sort🚯
+<p align="justify"> Suck n Sort is a trash sorting robot which can recognize and sort organic and non-organic waste, aiming to make it easier for personnel to collect and manage waste data. Using a combination of YOLOv8 and a parallel manipulator mechanism, we were able to create a functional and high precision prototype. </p>
+
+### Background💡
+<p align="justify"> The population in Indonesia is increasing day by day, resulting in more organic and non-organic waste. Unfortunately, there is a lack of awareness among people in Indonesia about the importance of separating these types of waste, leading to confusion. To address this issue, we are developing robots that can
+facilitate the separation of organic and non-organic waste. </p>
