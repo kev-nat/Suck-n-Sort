@@ -26,9 +26,10 @@ for x in range(0, len(portsList)):
     if portsList[x].startswith("COM" + str(val)):
         portVar = "COM" + str(val)
         print(portVar)
-        
+
 serialInst.baudrate = 115200
 serialInst.port = portVar
+serialInst.write_timeout = None
 serialInst.open()
 
 # MongoDB Connections
@@ -81,7 +82,7 @@ delay_after_detection = 0.25
 last_detection_time = 0
 
 # Perspective transformation points
-imgPts = np.float32([[334, 181], [974, 178], [6, 587], [1249, 576]])
+imgPts = np.float32([[409, 473], [918, 472], [133, 651], [1172, 649]]) #Top Left, Top Right, Bottom Right, Bottom Left
 objPoints = np.float32([[0, 0], [600, 0], [0, 600], [600, 600]])
 matrix = cv2.getPerspectiveTransform(imgPts, objPoints)
 
@@ -136,7 +137,7 @@ while True:
             class_num = int(c[i])
             print(x_int, y_int, class_num)
             
-            # Take screenshots
+            # Take screenshots of the objects
             screenshot = frame.copy()
             
             # Convert to PIL Image
@@ -174,7 +175,7 @@ while True:
             # Plastic Ashtray
             elif class_num == 6:
                 update_inorganic("Plastic Ashtray")
-
+            
             # Plastic Blue Cube
             elif class_num == 7:
                 update_inorganic("Blue Plastic Cube")
@@ -186,7 +187,7 @@ while True:
             # Plastic Green Cube
             elif class_num == 9:
                 update_inorganic("Green Plastic Cube")
-
+            
             # Plastic Red Cube
             elif class_num == 10:
                 update_inorganic("Red Plastic Cube")
@@ -211,14 +212,19 @@ while True:
             
             # Convert the integers to strings, join them with a comma, and encode the result to bytes
             data = f"{x_int},{y_int},{class_num}".encode('utf-8')
-            
+                        
             # Send the data
+            time.sleep(0.1)
             serialInst.write(data)
-            time.sleep(0.2)
-            print(str(serialInst).strip())  # Remove leading/trailing whitespace
+            
+            # Remove leading/trailing whitespace
+            print(str(serialInst).strip())  
+            time.sleep(3.25)
             
             if cv2.waitKey(30) == 27:
                 break
-            
+
+serialInst.flush()
+serialInst.close()
 cap.release()
 cv2.destroyAllWindows()
