@@ -9,10 +9,10 @@ int pos1 = 75;
 int pos2 = 75;
 int pos3 = 75;
 
-double e = 24.0; // End Effector radius
-double f = 75.0; // Base radius
-double re = 300.0; // Forearm length
-double rf = 100.0; // Bicep length
+double e = 24.0;      // End Effector radius
+double f = 75.0;      // Base radius
+double re = 300.0;    // Forearm length
+double rf = 100.0;    // Bicep length
 double cos120 = -0.5;
 double sin120 = sqrt(3) / 2;
 double pi = 3.14159265358979323846; // PI
@@ -29,7 +29,7 @@ void reset_zero(){
   myservo3.write(pos3);
   }
 
-//Calibration
+// Servo Calibration
 void calibrate_servo1() {
   myservo1.write(150);
   delay(200);
@@ -96,7 +96,7 @@ void calibrate_servo3() {
   delay(200);
 }
 
-// Inverse Kinematics
+// Inverse Kinematics Formula
 int delta_calcAngleYZ(double x0, double y0, double z0, double &theta){
   double y1 = -0.5 * 0.57735 * f;  // f/2 * tg 30
   y0 -= 0.5 * 0.57735 * e;  // shift center to edge
@@ -122,25 +122,26 @@ void delta_calcInverse(double x0, double y0, double z0, double &halftheta1, doub
     status = delta_calcAngleYZ(x0 * cos120 + y0 * sin120, y0 * cos120 - x0 * sin120, z0, theta2);  // rotate coords to +120 deg
     }
     
-    if (status == 0) {
-      status = delta_calcAngleYZ(x0 * cos120 - y0 * sin120, y0 * cos120 + x0 * sin120, z0, theta3);  // rotate coords to -120 deg
-      }
+  if (status == 0) {
+    status = delta_calcAngleYZ(x0 * cos120 - y0 * sin120, y0 * cos120 + x0 * sin120, z0, theta3);  // rotate coords to -120 deg
+    }
       
-      if (status == 0) {
-        halftheta1 = (theta1)+75;
-        halftheta2 = (theta2)+75;
-        halftheta3 = (theta3)+75;
-      
-      // If the calculations failed, set the angles to 75 degrees
-      }else {
-        halftheta1 = halftheta2 = halftheta3 = 75;
-        }
-        Serial.println(status);
-        Serial.println(ceil(halftheta1));
-        Serial.println(ceil(halftheta2));
-        Serial.println(ceil(halftheta3));
-        }
-          
+  if (status == 0) {
+    halftheta1 = (theta1)+75;
+    halftheta2 = (theta2)+75;
+    halftheta3 = (theta3)+75;
+  }
+  
+  // If the calculations failed, set the angles to 75 degrees
+  else {
+    halftheta1 = halftheta2 = halftheta3 = 75;
+    }
+    Serial.println(status);
+    Serial.println(ceil(halftheta1));
+    Serial.println(ceil(halftheta2));
+    Serial.println(ceil(halftheta3));
+    }
+
 void relayON(){
   digitalWrite(relay_pin, LOW);
   }
@@ -148,170 +149,145 @@ void relayON(){
 void relayOFF(){
   digitalWrite(relay_pin, HIGH);
   }
+        
+void turn_right(){
+  double right_1, right_2, right_3;
+  delta_calcInverse(130, 0, -277.198, right_1, right_2, right_3);
+  
+  myservo1.write(right_1);
+  myservo2.write(right_2);
+  myservo3.write(right_3);
+  delay(1000);
+    
+  relayOFF();
+  delay(1000);
+  
+  reset_zero();
+  delay(500);
+  }
 
-void FindNSort(){
+void turn_left(){
+  double left_1, left_2, left_3;
+  delta_calcInverse(-130, 0, -277.198, left_1, left_2, left_3);
+  
+  myservo1.write(left_1);
+  myservo2.write(left_2);
+  myservo3.write(left_3);
+  delay(1000);
+  
+  relayOFF();
+  delay(1000);
+  
+  reset_zero();
+  delay(500);
+  }
+
+void down(){
   double down_1, down_2, down_3;
   delta_calcInverse(x_cord, y_cord, -231.362, down_1, down_2, down_3);
+  
   myservo1.write(down_1);
   myservo2.write(down_2);
   myservo3.write(down_3);
   
-  delay(300);
   relayON();
+  delay(1000);
+}
+    
+void FindNSort(){
   
-  delay(2000);
-  reset_zero();
-  
-  delay(300);
-
   // 3D Print
   if (class_num == 0) {
-    double right_1, right_2, right_3;
-    delta_calcInverse(130, 0, -277.198, right_1, right_2, right_3);
-    myservo1.write(right_1);
-    myservo2.write(right_2);
-    myservo3.write(right_3);
+    down();
+    turn_right();
     } 
     
-    //Apple
+    // Apple
     else if (class_num == 1) {
-      double left_1, left_2, left_3;
-      delta_calcInverse(-130, 0, -277.198, left_1, left_2, left_3);
-      myservo1.write(left_1);
-      myservo2.write(left_2);
-      myservo3.write(left_3);
+      down();
+      turn_left();
       }
-      
-      // Cardboard
-      else if (class_num == 2) {
-        double right_1, right_2, right_3;
-        delta_calcInverse(130, 0, -277.198, right_1, right_2, right_3);
-        myservo1.write(right_1);
-        myservo2.write(right_2);
-        myservo3.write(right_3);
-        }
+    
+    // Cardboard
+    else if (class_num == 2) {
+      down();
+      turn_right();
+      }
         
-        // Metal   
-        else if (class_num == 3) {
-          double right_1, right_2, right_3;
-          delta_calcInverse(130, 0, -277.198, right_1, right_2, right_3);
-          myservo1.write(right_1);
-          myservo2.write(right_2);
-          myservo3.write(right_3);
-          }
+    // Metal   
+    else if (class_num == 3) {
+      down();
+      turn_right();
+      }
           
-          // Orange
-          else if (class_num == 4) {
-            double left_1, left_2, left_3;
-            delta_calcInverse(-130, 0, -277.198, left_1, left_2, left_3);
-            myservo1.write(left_1);
-            myservo2.write(left_2);
-            myservo3.write(left_3);
-            }
-
-            // Pineapple
-            else if (class_num == 5) {
-              double left_1, left_2, left_3;
-              delta_calcInverse(-130, 0, -277.198, left_1, left_2, left_3);
-              myservo1.write(left_1);
-              myservo2.write(left_2);
-              myservo3.write(left_3);
-              }
+    // Orange
+    else if (class_num == 4) {
+      down();
+      turn_left();
+      }
+    
+    // Pineapple
+    else if (class_num == 5) {
+      down();
+      turn_left();
+      }
               
-              // Plastic Ashtray
-              else if (class_num == 6) {
-                double right_1, right_2, right_3;
-                delta_calcInverse(130, 0, -277.198, right_1, right_2, right_3);
-                myservo1.write(right_1);
-                myservo2.write(right_2);
-                myservo3.write(right_3);
-                }
+    // Plastic Ashtray
+    else if (class_num == 6) {
+      down();
+      turn_right();
+      }
                 
-                // Blue Plastic Cube
-                else if (class_num == 7) {
-                  double right_1, right_2, right_3;
-                  delta_calcInverse(130, 0, -277.198, right_1, right_2, right_3);
-                  myservo1.write(right_1);
-                  myservo2.write(right_2);
-                  myservo3.write(right_3);
-                  }
+    // Blue Plastic Cube
+    else if (class_num == 7) {
+      down();
+      turn_right();
+      }
                   
-                  // Medium Plastic Cube
-                  else if (class_num == 8) {
-                    double right_1, right_2, right_3;
-                    delta_calcInverse(130, 0, -277.198, right_1, right_2, right_3);
-                    myservo1.write(right_1);
-                    myservo2.write(right_2);
-                    myservo3.write(right_3);
-                    }
+    // Medium Plastic Cube
+    else if (class_num == 8) {
+      down();
+      turn_right();
+      }
                     
-                    // Green Plastic Cube
-                    else if (class_num == 9) {
-                      double right_1, right_2, right_3;
-                      delta_calcInverse(130, 0, -277.198, right_1, right_2, right_3);
-                      myservo1.write(right_1);
-                      myservo2.write(right_2);
-                      myservo3.write(right_3);
-                      }
+    // Green Plastic Cube
+    else if (class_num == 9) {
+      down();
+      turn_right();
+      }
                       
-                      // Red Plastic Cube
-                      else if (class_num == 10) {
-                        double right_1, right_2, right_3;
-                        delta_calcInverse(130, 0, -277.198, right_1, right_2, right_3);
-                        myservo1.write(right_1);
-                        myservo2.write(right_2);
-                        myservo3.write(right_3);
-                        }
+    // Red Plastic Cube
+    else if (class_num == 10) {
+      down();
+      turn_right();
+      }
                         
-                        // Plastic Sauce Packet
-                        else if (class_num == 11) {
-                          double right_1, right_2, right_3;
-                          delta_calcInverse(130, 0, -277.198, right_1, right_2, right_3);
-                          myservo1.write(right_1);
-                          myservo2.write(right_2);
-                          myservo3.write(right_3);
-                          }
+    // Plastic Sauce Packet
+    else if (class_num == 11) {
+      down();
+      turn_right();
+      }
                           
-                          // Small Plastic Cup
-                          else if (class_num == 12) {
-                            double right_1, right_2, right_3;
-                            delta_calcInverse(130, 0, -277.198, right_1, right_2, right_3);
-                            myservo1.write(right_1);
-                            myservo2.write(right_2);
-                            myservo3.write(right_3);
-                            }
+    // Small Plastic Cup
+    else if (class_num == 12) {
+      down();
+      turn_right();
+      }
                             
-                            // Starfruit
-                            else if (class_num == 13) {
-                              double left_1, left_2, left_3;
-                              delta_calcInverse(-130, 0, -277.198, left_1, left_2, left_3);
-                              myservo1.write(left_1);
-                              myservo2.write(left_2);
-                              myservo3.write(left_3);
-                              }
-                              
-                              // Watermelon
-                              else if (class_num == 14) {
-                                double left_1, left_2, left_3;
-                                delta_calcInverse(-130, 0, -277.198, left_1, left_2, left_3);
-                                myservo1.write(left_1);
-                                myservo2.write(left_2);
-                                myservo3.write(left_3);
-                              }
-        
-                              delay(300);
-                              relayOFF();
-                                  
-                              delay(1000);
-                              reset_zero();
-                              
-                              delay(300);
-                              }
+    // Starfruit
+    else if (class_num == 13) {
+      down();
+      turn_left();
+      }
+    
+    // Watermelon
+    else if (class_num == 14) {
+      down();
+      turn_left();
+      }
+}
 
 void setup() {
-  Serial.setTimeout(999999);
-  delay(200);
-  
   Serial.begin(115200);
   myservo1.attach(10);  // attaches the servo on pin 10 to the servo object (green)
   myservo2.attach(9);   // attaches the servo on pin 9 to the servo object (yellow) 
@@ -325,7 +301,7 @@ void setup() {
   
   calibrate_servo1();
   delay(1000);
- 
+  
   calibrate_servo2(); 
   delay(1000);
     
@@ -334,36 +310,19 @@ void setup() {
   
   reset_zero();
 }
-          
-void loop() {
-  if (Serial.available() >= 8) {
-    char x_cord_buffer[32]; 
-    size_t x_cord_length = Serial.readBytes(x_cord_buffer, sizeof(x_cord_buffer));
-    x_cord = atof(x_cord_buffer);  // Convert to float
-    
-    char y_cord_buffer[32]; 
-    size_t y_cord_length = Serial.readBytes(y_cord_buffer, sizeof(y_cord_buffer));
-    y_cord = atof(y_cord_buffer);
 
-    char class_buffer[32];
-    size_t class_length = Serial.readBytes(class_buffer, sizeof(class_buffer));
-    class_num = atof(class_buffer);
+void loop() {
+  if (Serial.available() > 0) {
+    x_cord = Serial.parseFloat();
+    y_cord = Serial.parseFloat();
+    class_num = Serial.parseFloat();
     
     double halftheta1, halftheta2, halftheta3;
     delta_calcInverse(x_cord, y_cord, -277.198, halftheta1, halftheta2, halftheta3);
     
-    // Print the values to the serial monitor
-    Serial.print("X: ");
-    Serial.println(x_cord);
-    Serial.print("Y: ");
-    Serial.println(y_cord);
-    Serial.print("Class Number: ");
-    Serial.println(class_num);
-    
     myservo1.write(halftheta1);
     myservo2.write(halftheta2);
     myservo3.write(halftheta3);
-    delay(500);
     
     FindNSort(); 
   }
