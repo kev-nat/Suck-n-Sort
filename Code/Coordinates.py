@@ -27,7 +27,7 @@ for x in range(0, len(portsList)):
         portVar = "COM" + str(val)
         print(portVar)
 
-serialInst.baudrate = 115200
+serialInst.baudrate = 9600
 serialInst.port = portVar
 serialInst.write_timeout = None
 serialInst.open()
@@ -75,14 +75,14 @@ cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
-model = YOLO('bestv6.pt')
+model = YOLO('bestv7.pt')
 
 # Delay after detection (in seconds)
 delay_after_detection = 0.25
 last_detection_time = 0
 
 # Perspective transformation points
-imgPts = np.float32([[409, 473], [918, 472], [133, 651], [1172, 649]]) #Top Left, Top Right, Bottom Right, Bottom Left
+imgPts = np.float32([[334, 181], [974, 178], [6, 587], [1249, 576]]) #Top Left, Top Right, Bottom Right, Bottom Left
 objPoints = np.float32([[0, 0], [600, 0], [0, 600], [600, 600]])
 matrix = cv2.getPerspectiveTransform(imgPts, objPoints)
 
@@ -109,13 +109,13 @@ while True:
             y=c[1]
             
             # Convert the coordinates into python float values
-            x = np.interp(x,[0,600],[-130,130])
-            y = np.interp(y,[0,600],[-130,130])
+            x = np.interp(x,[0,600],[-160,200])
+            y = np.interp(y,[0,600],[-120,224])
             
             # Convert float to integer
             x_int = int(x)
-            y_int = int(y)
-            
+            y_int = int(y) 
+                       
             coord = str(x) + ' , '+str(y)
             annotator.box_label(b, coord)
             
@@ -219,12 +219,10 @@ while True:
             
             # Remove leading/trailing whitespace
             print(str(serialInst).strip())  
-            time.sleep(3.25)
+            time.sleep(3.75)   
             
             if cv2.waitKey(30) == 27:
                 break
 
-serialInst.flush()
-serialInst.close()
 cap.release()
 cv2.destroyAllWindows()
