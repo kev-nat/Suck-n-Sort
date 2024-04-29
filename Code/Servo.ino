@@ -9,10 +9,10 @@ int pos1 = 75;
 int pos2 = 75;
 int pos3 = 75;
 
-double e = 24.0;      // End Effector radius
-double f = 75.0;      // Base radius
-double re = 300.0;    // Forearm length
-double rf = 100.0;    // Bicep length
+double e = 24.0; // End Effector radius
+double f = 75.0; // Base radius
+double re = 300.0; // Forearm length
+double rf = 100.0; // Bicep length
 double cos120 = -0.5;
 double sin120 = sqrt(3) / 2;
 double pi = 3.14159265358979323846; // PI
@@ -288,7 +288,7 @@ void FindNSort(){
 }
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   myservo1.attach(10);  // attaches the servo on pin 10 to the servo object (green)
   myservo2.attach(9);   // attaches the servo on pin 9 to the servo object (yellow) 
   myservo3.attach(8);   // attaches the servo on pin 8 to the servo object (orange)
@@ -299,16 +299,16 @@ void setup() {
   reset_zero();
   delay(1000);
   
-  calibrate_servo1();
-  delay(1000);
+ calibrate_servo1();
+ delay(1000);
+ 
+ calibrate_servo2(); 
+ delay(1000);
+   
+ calibrate_servo3();
+ delay(1000);
   
-  calibrate_servo2(); 
-  delay(1000);
-    
-  calibrate_servo3();
-  delay(1000);
-  
-  reset_zero();
+ reset_zero();
 }
 
 void loop() {
