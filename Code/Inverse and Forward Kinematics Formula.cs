@@ -69,7 +69,6 @@ function delta_calcForward(theta1, theta2, theta3) {
   return Array(0,x0,y0,z0);// return error,x,y,z
 }
 
-
 // inverse kinematics
 // helper functions, calculates angle theta1 (for YZ-pane)
 function delta_calcAngleYZ(x0, y0, z0) {
@@ -90,7 +89,6 @@ function delta_calcAngleYZ(x0, y0, z0) {
 
   return Array(0,theta);  // return error, theta
 }
-
 
 // inverse kinematics: (x0, y0, z0) -> (theta1, theta2, theta3)
 // returned {error code, theta1,theta2,theta3}
@@ -114,13 +112,11 @@ function delta_calcInverse(x0, y0, z0) {
   return Array( status[0], theta1,theta2,theta3 );
 }
 
-
 function roundoff(x,y) {
   z=Math.pow(10,y);
   if(y==undefined) y=3;
   return Math.round(x*z)/z;
 }
-
 
 function read_inputs() {
   e   = parseFloat($('#e').val());
@@ -130,7 +126,6 @@ function read_inputs() {
   s   = parseInt($('#s').val());
   btf = parseFloat($('#b').val());
 }
-
 
 function test_bounds() {
   read_inputs();
@@ -156,6 +151,7 @@ function test_bounds() {
   if(maxz<-btf) maxz=-btf;
 
   var middlez=(maxz+minz)*0.5;
+
 //  $('#output').append("<p>("+maxz+","+minz+","+middlez+")</p>");
   var original_dist=(maxz-middlez);
   var dist=original_dist*0.5;
@@ -178,6 +174,7 @@ function test_bounds() {
     r[5]=delta_calcInverse(+sum,-sum,middlez-sum);
     r[6]=delta_calcInverse(-sum,-sum,middlez-sum);
     r[7]=delta_calcInverse(-sum,+sum,middlez-sum);
+
     if(r[0][0]!=0 || r[1][0]!=0 || r[2][0]!=0 || r[3][0]!=0 || 
        r[4][0]!=0 || r[5][0]!=0 || r[6][0]!=0 || r[7][0]!=0 ) {
       sum-=dist;
@@ -215,7 +212,6 @@ function test_bounds() {
   $('#res').html("+/-"+roundoff(sum,3)+"mm");
 }
 
-
 function test_fk_ik_match() {
   read_inputs();
   theta1=parseFloat($('#t1').val());
@@ -229,7 +225,6 @@ function test_fk_ik_match() {
   $('#z').val(roundoff(results1[3],3));
 }
 
-
 function test_fk() {
   read_inputs();
   theta1=parseFloat($('#t1').val());
@@ -240,7 +235,6 @@ function test_fk() {
   $('#y').val(roundoff(results1[2],3));
   $('#z').val(roundoff(results1[3],3));
 }
-
 
 function test_ik() {
   read_inputs();
@@ -253,12 +247,10 @@ function test_ik() {
   $('#t3').val(roundoff(results2[3],3));
 }
 
-
 function test() {
   test_bounds();
   test_fk_ik_match();
 }
-
 
 $(document).ready(function() {
   test();
