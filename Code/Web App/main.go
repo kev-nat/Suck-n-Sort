@@ -70,7 +70,7 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	// MongoDB connection setup
-	uri := "mongodb+srv://kev:GeRNWT62OhjvQGzg@sucknsort.1lsxt0v.mongodb.net/?retryWrites=true&w=majority"
+	uri := "Your MongoDB Atlas connection URL"
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))
 	if err != nil {
 		log.Fatal(err)
