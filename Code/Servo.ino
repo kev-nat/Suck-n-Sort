@@ -152,7 +152,7 @@ void relayOFF(){
         
 void turn_right(){
   double right_1, right_2, right_3;
-  delta_calcInverse(130, 0, -277.198, right_1, right_2, right_3);
+  delta_calcInverse(150, 0, -277.198, right_1, right_2, right_3);
   
   myservo1.write(right_1);
   myservo2.write(right_2);
@@ -168,7 +168,7 @@ void turn_right(){
 
 void turn_left(){
   double left_1, left_2, left_3;
-  delta_calcInverse(-130, 0, -277.198, left_1, left_2, left_3);
+  delta_calcInverse(-150, 0, -277.198, left_1, left_2, left_3);
   
   myservo1.write(left_1);
   myservo2.write(left_2);
@@ -184,14 +184,14 @@ void turn_left(){
 
 void down(){
   double down_1, down_2, down_3;
-  delta_calcInverse(x_cord, y_cord, -231.362, down_1, down_2, down_3);
+  delta_calcInverse(x_cord, y_cord, -226.362, down_1, down_2, down_3);
   
   myservo1.write(down_1);
   myservo2.write(down_2);
   myservo3.write(down_3);
   
   relayON();
-  delay(1000);
+  delay(2000);
 }
     
 void FindNSort(){
@@ -307,7 +307,7 @@ void setup() {
    
  calibrate_servo3();
  delay(1000);
-  
+ 
  reset_zero();
 }
 
