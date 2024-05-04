@@ -299,16 +299,16 @@ void setup() {
   reset_zero();
   delay(1000);
   
- calibrate_servo1();
- delay(1000);
- 
- calibrate_servo2(); 
- delay(1000);
-   
- calibrate_servo3();
- delay(1000);
- 
- reset_zero();
+  calibrate_servo1();
+  delay(1000);
+  
+  calibrate_servo2(); 
+  delay(1000);
+    
+  calibrate_servo3();
+  delay(1000);
+  
+  reset_zero();
 }
 
 void loop() {
