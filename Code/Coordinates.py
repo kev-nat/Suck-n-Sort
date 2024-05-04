@@ -33,7 +33,7 @@ serialInst.write_timeout = None
 serialInst.open()
 
 # MongoDB Connections
-myclient = pymongo.MongoClient("mongodb+srv://kev:GeRNWT62OhjvQGzg@sucknsort.1lsxt0v.mongodb.net/?retryWrites=true&w=majority")
+myclient = pymongo.MongoClient("ur MongoDB Atlas connection URL")
 mydb = myclient["WasteSorting"]
 mycol = mydb["Types of Trash"]
 load_dotenv(find_dotenv())
@@ -82,7 +82,7 @@ delay_after_detection = 0.25
 last_detection_time = 0
 
 # Perspective transformation points
-imgPts = np.float32([[334, 181], [974, 178], [6, 587], [1249, 576]]) #Top Left, Top Right, Bottom Right, Bottom Left
+imgPts = np.float32([[334, 181], [974, 178], [6, 587], [1249, 576]]) # Top Left, Top Right, Bottom Right, Bottom Left
 objPoints = np.float32([[0, 0], [600, 0], [0, 600], [600, 600]])
 matrix = cv2.getPerspectiveTransform(imgPts, objPoints)
 
@@ -109,13 +109,13 @@ while True:
             y=c[1]
             
             # Convert the coordinates into python float values
-            x = np.interp(x,[0,600],[-160,200])
-            y = np.interp(y,[0,600],[-120,224])
+            x = np.interp(x,[0,600],[-190,170])
+            y = np.interp(y,[0,600],[-115,219])
             
             # Convert float to integer
             x_int = int(x)
             y_int = int(y) 
-                       
+            
             coord = str(x) + ' , '+str(y)
             annotator.box_label(b, coord)
             
@@ -219,7 +219,7 @@ while True:
             
             # Remove leading/trailing whitespace
             print(str(serialInst).strip())  
-            time.sleep(3.75)   
+            time.sleep(4)   
             
             if cv2.waitKey(30) == 27:
                 break
