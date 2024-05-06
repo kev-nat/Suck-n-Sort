@@ -4,3 +4,5 @@
 ### Background💡
 <p align="justify"> The population in Indonesia is increasing day by day, resulting in more organic and non-organic waste. Unfortunately, there is a lack of awareness among people in Indonesia about the importance of separating these types of waste, leading to confusion. To address this issue, we are developing robots that can
 facilitate the separation of organic and non-organic waste. </p>
+
+### Demonstrations📹
