@@ -6,3 +6,4 @@
 facilitate the separation of organic and non-organic waste. </p>
 
 ### Demonstrations📹
+https://github.com/kev-nat/Suck-n-Sort/assets/20130756/fde5c36b-af00-4599-a1f7-d6415e89592d
