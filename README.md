@@ -12,6 +12,12 @@ https://github.com/kev-nat/Suck-n-Sort/assets/97384711/3d0b68a4-2f13-46bd-ba0d-8
 
 https://github.com/kev-nat/Suck-n-Sort/assets/20130756/fde5c36b-af00-4599-a1f7-d6415e89592d
 
+### **Roles 👷**
+|Name                   | Responsibility
+|---                    |---         
+|Kevin Nathanael        | Project Manager, Mechanical, Electrical, Software & Programming
+|Alifito Marciano Camil | Software & Programming
+
 ### References🗂️
 1. <a href="https://www.marginallyclever.com/other/samples/fk-ik-test.html"> Rotary Delta Robot Forward/Inverse Kinematics Calculations </a>
 2. Chyun-Chau Fuh (2021). <a href="https://www.mathworks.com/matlabcentral/fileexchange/93775-delta-robot"> Delta Robot Model </a> , MATLAB Central File Exchange. Retrieved May 8, 2024.
