@@ -1,6 +1,3 @@
-# Suck n Sort🚯
-<p align="justify">AI-guided waste-sorting robot for automated waste sorting, targeting deployment in polluted rivers and state-owned waste management facilities across Indonesia.</p>
-
 ### Background💡
 <p align="justify"> Indonesia's rapidly growing population produces rising volumes of organic and non-organic waste, yet low public awareness of proper segregation leads to inefficient disposal. This confusion worsens pollution, particularly in rivers and overloaded waste facilities, straining ecosystems and management systems. </p>
 
@@ -16,12 +13,6 @@ https://github.com/user-attachments/assets/939cf891-86d5-4e8b-bb2a-d422a270d769
 https://github.com/user-attachments/assets/992a1267-e5eb-47bf-85b0-22bd18b2c24f
 
 https://github.com/user-attachments/assets/d01e15d1-943d-443b-bef7-302e9156bd0e
-
-### **Roles 👷**
-|Name                   | Responsibility
-|---                    |---         
-|Kevin Nathanael        | Project Manager, Embedded AI Engineer, Mechanical & Electrical Engineer 
-|Alifito Marciano Camil | Software & Programming
 
 ### References🗂️
 1. <a href="https://www.marginallyclever.com/other/samples/fk-ik-test.html"> Rotary Delta Robot Forward/Inverse Kinematics Calculations </a>
